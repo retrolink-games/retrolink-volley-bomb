@@ -244,7 +244,12 @@ GLYPHS = {
 FONT_DIR = os.path.join(ROOT, "tools", "fonts")
 
 
-def font(name, ttf, scale, cell):
+FIRE = [(0x8A, 0x1C, 0x1C), (0xB0, 0x24, 0x1E), (0xD8, 0x3A, 0x20), (0xF0, 0x5A, 0x22), (0xFF, 0x7A, 0x2A),
+        (0xFF, 0x9C, 0x30), (0xFF, 0xC0, 0x40), (0xFF, 0xE0, 0x70), (0xFF, 0xF6, 0xC8), (0xFF, 0xE0, 0x70),
+        (0xFF, 0xC0, 0x40), (0xFF, 0x9C, 0x30), (0xFF, 0x7A, 0x2A), (0xF0, 0x5A, 0x22), (0xD8, 0x3A, 0x20)]
+
+
+def font(name, ttf, scale, cell, fire=False):
     """RetroLink's brand font (Silkscreen, SIL OFL 1.1) rasterised on its native pixel grid
     (8 px size) and scaled up `scale` times into `cell` x `cell` sprite cells. Also returns the
     proportional advance widths (ASCII 32..126) for Butano's variable-width text."""
@@ -262,9 +267,20 @@ def font(name, ttf, scale, cell):
         oy = (cell - 8 * scale) // 2 + scale
         for y in range(12):
             for x in range(12):
-                if img.getpixel((x, y)):
+                if not img.getpixel((x, y)):
+                    continue
+                if not fire:
                     rect(px, x * scale, i * cell + oy + (y - 2) * scale, scale, scale, 1)
-    write_bmp4(os.path.join(OUT, name + ".bmp"), px, cell, cell * len(chars), [DUMMY, CREAM])
+                    continue
+                # Fire fill: 2x2 "flame pixels" whose palette index climbs with height plus a per-column
+                # flicker offset. The game rotates the 15-colour palette so the bands rise like flames.
+                for sy in range(0, scale, 2):
+                    for sx in range(0, scale, 2):
+                        gx, gy = x * scale + sx, (y - 2) * scale + sy
+                        col = (gx // 2) * 7919 % 13
+                        idx = 1 + (gy // 2 + (col * 5) // 4 + ((gx // 2) & 1)) % 15
+                        rect(px, gx, i * cell + oy + gy, 2, 2, idx)
+    write_bmp4(os.path.join(OUT, name + ".bmp"), px, cell, cell * len(chars), [DUMMY] + (FIRE if fire else [CREAM]))
     write_json(name, {"type": "sprite", "height": cell})
     return widths
 
@@ -371,6 +387,7 @@ def main():
     smoke()
     small = font("font_small", "Silkscreen-Regular.ttf", 2, 16)
     big = font("font_big", "Silkscreen-Bold.ttf", 4, 32)
+    font("font_big_fire", "Silkscreen-Bold.ttf", 4, 32, fire=True)
     tiny = font("font_tiny", "Silkscreen-Regular.ttf", 1, 8)
     write_widths([("font_tiny", tiny), ("font_small", small), ("font_big", big)])
     print("assets written to", OUT)

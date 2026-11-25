@@ -15,7 +15,9 @@ namespace text
         P4,
         SAND,
         DIM,
-        RED
+        RED,
+        MINT,  // RetroLink brand: LINK
+        WHITE  // warm white
     };
 
     [[nodiscard]] ink player_ink(int slot);
@@ -28,6 +30,10 @@ namespace text
 
     // Returns the shared big (bold 4x, 32x32 cell) generator set to `colour`, centre aligned.
     bn::sprite_text_generator& big(ink colour);
+
+    // Big bold font filled with flames; animate with fire_step() every frame.
+    bn::sprite_text_generator& big_fire();
+    void fire_step(int frame);
 
     // Formats `value` as `digits` zero-padded decimal digits / hex digits into `out` (no terminator handling needed).
     void dec(char* out, unsigned value, int digits);

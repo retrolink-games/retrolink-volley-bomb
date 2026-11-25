@@ -6,6 +6,8 @@
 #include "bn_sprite_items_font_small.h"
 #include "bn_sprite_items_font_big.h"
 #include "bn_sprite_items_font_tiny.h"
+#include "bn_sprite_items_font_big_fire.h"
+#include "bn_sprite_palette_ptr.h"
 #include "bn_utf8_characters_map_ref.h"
 
 #include "lv_font_widths.h"
@@ -30,6 +32,8 @@ namespace
     LV_PAL(sand, 0xF2, 0xCF, 0x8A)
     LV_PAL(dim, 0x4A, 0x55, 0x5A)
     LV_PAL(red, 0xFF, 0x4D, 0x5E)
+    LV_PAL(mint, 0x8F, 0xD6, 0xC8)
+    LV_PAL(white, 0xFF, 0xF3, 0xD6)
 
     const bn::sprite_palette_item& palette(text::ink colour)
     {
@@ -42,6 +46,8 @@ namespace
         case text::ink::SAND: return sand_palette;
         case text::ink::DIM: return dim_palette;
         case text::ink::RED: return red_palette;
+        case text::ink::MINT: return mint_palette;
+        case text::ink::WHITE: return white_palette;
         default: return cream_palette;
         }
     }
@@ -53,6 +59,8 @@ namespace
     bn::optional<bn::sprite_text_generator> tiny_gen;
     bn::optional<bn::sprite_text_generator> small_gen;
     bn::optional<bn::sprite_text_generator> big_gen;
+    constexpr bn::sprite_font fire_font(bn::sprite_items::font_big_fire, bn::utf8_characters_map_ref(), font_big_widths);
+    bn::optional<bn::sprite_text_generator> fire_gen;
 }
 
 namespace text
@@ -117,6 +125,23 @@ void hex(char* out, unsigned value, int digits)
         out[i] = char(d < 10 ? '0' + d : 'A' + d - 10);
         value >>= 4;
     }
+}
+
+bn::sprite_text_generator& big_fire()
+{
+    if(! fire_gen)
+    {
+        fire_gen.emplace(fire_font);
+        fire_gen->set_center_alignment();
+    }
+    return *fire_gen;
+}
+
+void fire_step(int frame)
+{
+    // Rotating the 15 fire colours moves the bands baked into the glyphs: flames rising.
+    bn::sprite_palette_ptr pal = bn::sprite_items::font_big_fire.palette_item().create_palette();
+    pal.set_rotate_count((frame / 4) % 15);
 }
 
 }

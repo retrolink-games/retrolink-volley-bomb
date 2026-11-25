@@ -21,11 +21,16 @@ id title()
     bn::vector<bn::sprite_ptr, 24> logo;
     bn::vector<bn::sprite_ptr, 24> sub;
     bn::vector<bn::sprite_ptr, 16> press;
-    bn::sprite_text_generator& top = text::small(text::ink::SAND);
-    top.set_center_alignment();
-    top.generate(0, -66, "RETROLINK", logo);
-    text::big(text::ink::P1).generate(0, -40, "VOLLEY", logo);
-    text::big(text::ink::P2).generate(0, -12, "BOMB", logo);
+    // RetroLink wordmark: RETRO in sand, LINK in mint, one word (as on retrolink.games).
+    {
+        bn::sprite_text_generator& top = text::small(text::ink::SAND);
+        int wr = top.width("RETRO");
+        int x0 = -(wr + top.width("LINK")) / 2;
+        top.generate(x0, -66, "RETRO", logo);
+        text::small(text::ink::MINT).generate(x0 + wr, -66, "LINK", logo);
+    }
+    text::big(text::ink::WHITE).generate(0, -40, "VOLLEY", logo);
+    text::big_fire().generate(0, -12, "BOMB", logo);
 
     text::tiny(text::ink::SAND).generate(0, 10, "1-4 PLAYERS  /  LINK CABLE", sub);
 
@@ -42,6 +47,7 @@ id title()
         }
 
         view.update(s);
+        text::fire_step(frame);
 
         if((frame & 31) == 0)
         {
