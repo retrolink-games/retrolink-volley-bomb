@@ -23,7 +23,7 @@ id title()
     bn::vector<bn::sprite_ptr, 16> press;
     bn::sprite_text_generator& top = text::small(text::ink::SAND);
     top.set_center_alignment();
-    top.generate(0, -66, "RETRO LINK", logo);
+    top.generate(0, -66, "RETROLINK", logo);
     text::big(text::ink::P1).generate(0, -40, "VOLLEY", logo);
     text::big(text::ink::P2).generate(0, -12, "BOMB", logo);
 

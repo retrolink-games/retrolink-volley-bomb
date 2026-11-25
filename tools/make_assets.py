@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generates every Link Volley bitmap from code (no third-party art).
 
-Designs come from the Retro Link website hero (retro-local-multiplayer/website/main.js):
+Designs come from the RetroLink website hero (retro-local-multiplayer/website/main.js):
 the 10x10 blob, the 3x5 digit font (extended here to a full original alphabet), the sand ball,
 the night scene (sky bands, stars, three ridges, trees) and the per-player palettes.
 
@@ -245,7 +245,7 @@ FONT_DIR = os.path.join(ROOT, "tools", "fonts")
 
 
 def font(name, ttf, scale, cell):
-    """Retro Link's brand font (Silkscreen, SIL OFL 1.1) rasterised on its native pixel grid
+    """RetroLink's brand font (Silkscreen, SIL OFL 1.1) rasterised on its native pixel grid
     (8 px size) and scaled up `scale` times into `cell` x `cell` sprite cells. Also returns the
     proportional advance widths (ASCII 32..126) for Butano's variable-width text."""
     from PIL import Image, ImageDraw, ImageFont

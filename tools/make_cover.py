@@ -32,7 +32,7 @@ def render(name, L):
     def text(y, s, f, col, shadow=DARK):
         w = d.textlength(s, font=f); x = (W - w) // 2
         d.text((x+2, y+2), s, font=f, fill=shadow); d.text((x, y), s, font=f, fill=col)
-    # Retro Link brand: pixel mark + RETRO (sand) LINK (mint), as on retrolink.games
+    # RetroLink brand: pixel mark + RETRO (sand) LINK (mint), as on retrolink.games
     import re
     BOLD = os.path.join(os.path.dirname(__file__), "fonts", "Silkscreen-Bold.ttf")
     svg = open(os.path.join(os.path.dirname(__file__), "retrolink-mark.svg")).read()

@@ -1,8 +1,8 @@
-# Retro Link Volley Bomb
+# RetroLink Volley Bomb
 
-<p align="center"><img src="docs/art/cover-square.png" alt="Retro Link Volley Bomb cover" width="480"></p>
+<p align="center"><img src="docs/art/cover-square.png" alt="RetroLink Volley Bomb cover" width="480"></p>
 
-An original 1–4 player Game Boy Advance game for the link cable (Multi-Play mode). Play it linked phone to phone with [Retro Link](https://retrolink.games).
+An original 1–4 player Game Boy Advance game for the link cable (Multi-Play mode). Packaged with [RetroLink](https://retrolink.games).
 
 The court is up to four GBA screens laid out like phones on a table:
 

@@ -1,4 +1,4 @@
-// Text helpers: Retro Link's brand pixel font (Silkscreen) at 1x, 2x and bold 4x.
+// Text helpers: RetroLink's brand pixel font (Silkscreen) at 1x, 2x and bold 4x.
 #ifndef LV_TEXT_H
 #define LV_TEXT_H
 
